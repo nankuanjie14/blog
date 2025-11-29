@@ -12,9 +12,18 @@ title: Home
 <ul>
   {% for page in site.pages %}
     {% if page.path contains 'articles/' and page.path contains '.md' %}
+      {% assign filename = page.path | split: '/' | last %}
+      {% assign parts = filename | split: '--' %}
       <li>
         <a href="{{ page.url | relative_url }}">
-          {{ page.title }}
+          {% if parts.size > 1 %}
+            {{ parts[0] }} {{ page.title }}
+          {% else %}
+            {{ page.title }}
+          {% endif %}
+          {% if page.author %}
+            - {{ page.author }}
+          {% endif %}
         </a>
       </li>
     {% endif %}
@@ -22,9 +31,16 @@ title: Home
   {% for file in site.static_files %}
     {% if file.path contains 'articles/' %}
       {% if file.extname == '.pdf' %}
+        {% assign filename = file.name %}
+        {% assign parts = filename | split: '--' %}
         <li>
           <a href="{{ file.path | relative_url }}" target="_blank">
-            {{ file.name }} (PDF)
+            {% if parts.size > 1 %}
+              {{ parts[0] }} {{ parts[1] | remove: file.extname }} (PDF)
+            {% else %}
+              {{ file.name }} (PDF)
+            {% endif %}
+            - 王昀
           </a>
         </li>
       {% endif %}
