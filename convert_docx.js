@@ -15,21 +15,22 @@ fs.readdir(articlesDir, (err, files) => {
         if (path.extname(file) === '.docx') {
             const filePath = path.join(articlesDir, file);
             const fileName = path.basename(file, '.docx');
-            
-            mammoth.convertToHtml({path: filePath})
+
+            mammoth.convertToHtml({ path: filePath })
                 .then((result) => {
                     const html = result.value; // The generated HTML
                     const markdown = turndownService.turndown(html);
-                    
+
                     const frontMatter = `---
 layout: default
 title: "${fileName}"
+author: "王昀"
 ---
 
 `;
                     const finalContent = frontMatter + markdown;
                     const outputPath = path.join(articlesDir, `${fileName}.md`);
-                    
+
                     fs.writeFile(outputPath, finalContent, (err) => {
                         if (err) throw err;
                         console.log(`Converted ${file} to ${fileName}.md`);
