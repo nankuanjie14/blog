@@ -14,15 +14,14 @@ title: Home
     {% if page.path contains 'articles/' and page.path contains '.md' %}
       {% assign filename = page.path | split: '/' | last %}
       {% assign parts = filename | split: '--' %}
-      <li>
-        <a href="{{ page.url | relative_url }}">
+      <li style="margin-bottom: 15px;">
+        <a href="{{ page.url | relative_url }}" style="text-decoration: none; color: inherit;">
           {% if parts.size > 1 %}
-            {{ parts[0] }} {{ page.title }}
+            <div style="font-size: 1.1em; font-weight: bold; color: #2a7ae2;">{{ page.title }}</div>
+            <div style="color: #666; font-size: 0.9em;">{{ parts[0] }} {% if page.author %}- {{ page.author }}{% endif %}</div>
           {% else %}
-            {{ page.title }}
-          {% endif %}
-          {% if page.author %}
-            - {{ page.author }}
+            <div style="font-size: 1.1em; font-weight: bold; color: #2a7ae2;">{{ page.title }}</div>
+            {% if page.author %}<div style="color: #666; font-size: 0.9em;">- {{ page.author }}</div>{% endif %}
           {% endif %}
         </a>
       </li>
@@ -33,14 +32,15 @@ title: Home
       {% if file.extname == '.pdf' %}
         {% assign filename = file.name %}
         {% assign parts = filename | split: '--' %}
-        <li>
-          <a href="{{ file.path | relative_url }}" target="_blank">
+        <li style="margin-bottom: 15px;">
+          <a href="{{ file.path | relative_url }}" target="_blank" style="text-decoration: none; color: inherit;">
             {% if parts.size > 1 %}
-              {{ parts[0] }} {{ parts[1] | remove: file.extname }} (PDF)
+              <div style="font-size: 1.1em; font-weight: bold; color: #2a7ae2;">{{ parts[1] | remove: file.extname }} (PDF)</div>
+              <div style="color: #666; font-size: 0.9em;">{{ parts[0] }} - 王昀</div>
             {% else %}
-              {{ file.name }} (PDF)
+              <div style="font-size: 1.1em; font-weight: bold; color: #2a7ae2;">{{ file.name }} (PDF)</div>
+              <div style="color: #666; font-size: 0.9em;">- 王昀</div>
             {% endif %}
-            - 王昀
           </a>
         </li>
       {% endif %}
